@@ -10,8 +10,8 @@ data class Repository(
     val name: String,
     val owner: Owner,
     val description: String?,
-    val htmlUrl: String,
-    val contributorsUrl: String
+    val html_url: String,
+    val contributors_url: String
 )
 
 data class Owner(
@@ -20,7 +20,7 @@ data class Owner(
 
 data class Contributor(
     val login: String,
-    val avatarUrl: String,
-    val htmlUrl: String,
+    val avatar_url: String,
+    val html_url: String,
     val contributions: Int
 )

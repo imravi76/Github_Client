@@ -8,18 +8,19 @@ import kotlinx.coroutines.launch
 
 class DetailsViewModel : ViewModel() {
     private val _repository = MutableStateFlow<Repository?>(null)
+    val repository: StateFlow<Repository?> get() = _repository
+
     private val _contributors = MutableStateFlow<List<Contributor>>(emptyList())
     val contributors: StateFlow<List<Contributor>> get() = _contributors
 
-    fun getRepositoryDetails(owner: String, repoName: String): StateFlow<Repository?> {
+    fun getRepositoryDetails(owner: String, repoName: String) {
         viewModelScope.launch {
             val response = RetrofitInstance.api.getRepositoryDetails(owner, repoName)
             if (response.isSuccessful) {
                 _repository.value = response.body()
-                _repository.value?.contributorsUrl?.let { fetchContributors(it) }
+                _repository.value?.contributors_url?.let { fetchContributors(it) }
             }
         }
-        return _repository
     }
 
     private fun fetchContributors(contributorsUrl: String) {
@@ -31,4 +32,5 @@ class DetailsViewModel : ViewModel() {
         }
     }
 }
+
 
