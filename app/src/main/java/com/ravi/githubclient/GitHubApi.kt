@@ -10,7 +10,11 @@ import retrofit2.http.Url
 
 interface GitHubApi {
     @GET("search/repositories")
-    suspend fun searchRepositories(@Query("q") query: String): Response<SearchResponse>
+    suspend fun searchRepositories(
+        @Query("q") query: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
+    ): Response<SearchResponse>
 
     @GET("repos/{owner}/{repoName}")
     suspend fun getRepositoryDetails(@Path("owner") owner: String, @Path("repoName") repoName: String): Response<Repository>

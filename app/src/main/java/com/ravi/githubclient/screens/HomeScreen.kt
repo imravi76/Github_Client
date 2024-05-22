@@ -4,6 +4,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
@@ -19,29 +21,37 @@ import com.ravi.githubclient.Repository
 fun HomeScreen(navController: NavController) {
     val viewModel: HomeViewModel = viewModel()
     val searchQuery = remember { mutableStateOf("") }
-    val repositories = viewModel.repositories.collectAsState()
+    val repositories by viewModel.repositories.collectAsState()
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
 
     Column {
-        TextField(
-            value = searchQuery.value,
-            onValueChange = { searchQuery.value = it },
-            label = { Text("Search Repositories") },
-            trailingIcon = {
-                Icon(
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = "Search Icon",
-                    modifier = Modifier.clickable {
-                        viewModel.searchRepositories(searchQuery.value)
-                    }
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        )
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            TextField(
+                value = searchQuery.value,
+                onValueChange = { searchQuery.value = it },
+                label = { Text("Search Repositories") },
+                modifier = Modifier.weight(1f)
+            )
+            IconButton(
+                onClick = { viewModel.searchRepositories(searchQuery.value) }
+            ) {
+                Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
+            }
+        }
 
-        LazyColumn {
-            items(repositories.value) { repo ->
+        LazyColumn(state = listState) {
+            itemsIndexed(repositories) { index, repo ->
+                if (index >= repositories.size - 1 && repositories.isNotEmpty()) {
+                    // Load next page when the last item is reached
+                    LaunchedEffect(Unit) {
+                        viewModel.fetchNextPage()
+                    }
+                }
                 RepositoryCard(repo) {
                     navController.navigate("details/${repo.owner.login}/${repo.name}")
                 }
