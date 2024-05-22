@@ -1,9 +1,8 @@
-package com.ravi.githubclient.screens
+package com.ravi.githubclient.view
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -14,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.ravi.githubclient.HomeViewModel
-import com.ravi.githubclient.Repository
+import com.ravi.githubclient.viewmodel.HomeViewModel
+import com.ravi.githubclient.model.Repository
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -23,7 +22,7 @@ fun HomeScreen(navController: NavController) {
     val searchQuery = remember { mutableStateOf("") }
     val repositories by viewModel.repositories.collectAsState()
     val listState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
+    rememberCoroutineScope()
 
     Column {
         Row(modifier = Modifier
@@ -47,7 +46,6 @@ fun HomeScreen(navController: NavController) {
         LazyColumn(state = listState) {
             itemsIndexed(repositories) { index, repo ->
                 if (index >= repositories.size - 1 && repositories.isNotEmpty()) {
-                    // Load next page when the last item is reached
                     LaunchedEffect(Unit) {
                         viewModel.fetchNextPage()
                     }

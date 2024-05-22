@@ -1,4 +1,4 @@
-package com.ravi.githubclient.screens
+package com.ravi.githubclient.view
 
 import android.net.Uri
 import android.webkit.WebView
@@ -13,7 +13,7 @@ fun WebViewScreen(url: String) {
         factory = { context ->
             WebView(context).apply {
                 webViewClient = WebViewClient()
-                settings.javaScriptEnabled = true // Enable JavaScript if needed
+                settings.javaScriptEnabled = true
                 loadUrl(decodedUrl)
             }
         },

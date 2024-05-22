@@ -1,4 +1,4 @@
-package com.ravi.githubclient
+package com.ravi.githubclient.model
 
 import com.google.gson.annotations.SerializedName
 

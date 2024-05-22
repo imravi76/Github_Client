@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ravi.githubclient.screens.DetailsScreen
-import com.ravi.githubclient.screens.HomeScreen
-import com.ravi.githubclient.screens.WebViewScreen
+import com.ravi.githubclient.view.DetailsScreen
+import com.ravi.githubclient.view.HomeScreen
+import com.ravi.githubclient.view.WebViewScreen
 
 @Composable
 fun NavGraph(startDestination: String = "home") {

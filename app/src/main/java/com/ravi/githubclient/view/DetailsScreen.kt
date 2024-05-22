@@ -1,4 +1,4 @@
-package com.ravi.githubclient.screens
+package com.ravi.githubclient.view
 
 import android.net.Uri
 import android.util.Log
@@ -18,8 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import com.ravi.githubclient.Contributor
-import com.ravi.githubclient.DetailsViewModel
+import com.ravi.githubclient.model.Contributor
+import com.ravi.githubclient.viewmodel.DetailsViewModel
 
 @Composable
 fun DetailsScreen(owner: String, repoName: String, navController: NavController) {
@@ -30,8 +30,8 @@ fun DetailsScreen(owner: String, repoName: String, navController: NavController)
 
     repository?.let { repo ->
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = repo.name, style = MaterialTheme.typography.bodySmall)
-            Text(text = repo.description ?: "No description", style = MaterialTheme.typography.bodySmall)
+            Text(text = "Project Name: "+repo.name, style = MaterialTheme.typography.bodySmall)
+            Text(text = ("Description: " + repo.description) ?: "No description", style = MaterialTheme.typography.bodySmall)
             Text(
                 text = "Project Link",
                 color = MaterialTheme.colorScheme.primary,

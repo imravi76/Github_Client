@@ -1,7 +1,10 @@
-package com.ravi.githubclient
+package com.ravi.githubclient.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ravi.githubclient.utils.RetrofitInstance
+import com.ravi.githubclient.model.Contributor
+import com.ravi.githubclient.model.Repository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

@@ -1,5 +1,8 @@
-package com.ravi.githubclient
+package com.ravi.githubclient.utils
 
+import com.ravi.githubclient.model.Contributor
+import com.ravi.githubclient.model.Repository
+import com.ravi.githubclient.model.SearchResponse
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
